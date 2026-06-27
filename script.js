@@ -68,13 +68,17 @@ escribirTitulo();
 
 btn.onclick=()=>{
 
-document.querySelector(".card").style.transform="scale(.95)";
+document.getElementById("scene1").style.opacity="0";
 
 setTimeout(()=>{
 
-alert("Aquí comenzará la siguiente escena: el sobre se abrirá. ❤️");
+document.getElementById("scene1").classList.add("hidden");
 
-},500);
+document.getElementById("scene2").classList.remove("hidden");
+
+document.getElementById("scene2").style.opacity="1";
+
+},900);
 
 };
 
