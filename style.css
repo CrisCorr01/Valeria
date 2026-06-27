@@ -499,3 +499,74 @@ left:140%;
 }
 
 }
+#letter{
+
+overflow:hidden;
+
+}
+
+#letterText{
+
+margin-top:25px;
+
+font-size:18px;
+
+line-height:1.9;
+
+color:#555;
+
+min-height:180px;
+
+text-align:left;
+
+white-space:pre-line;
+
+}
+
+#continueBtn{
+
+margin-top:30px;
+
+opacity:0;
+
+pointer-events:none;
+
+transition:.5s;
+
+}
+
+.fullscreen{
+
+position:fixed !important;
+
+top:50%;
+
+left:50%;
+
+transform:translate(-50%,-50%) !important;
+
+width:min(92vw,700px) !important;
+
+height:85vh !important;
+
+z-index:999;
+
+border-radius:20px;
+
+padding:45px;
+
+overflow:auto;
+
+background:white;
+
+box-shadow:0 30px 80px rgba(0,0,0,.45);
+
+}
+
+.blur{
+
+filter:blur(8px);
+
+transition:1s;
+
+}
