@@ -16,6 +16,60 @@ const envelope=document.querySelector(".envelope");
 const flap=document.querySelector(".flap");
 const letter=document.querySelector(".letter");
 
+const letterTitle=document.getElementById("letterTitle");
+const letterText=document.getElementById("letterText");
+const continueBtn=document.getElementById("continueBtn");
+
+const mensajeCarta=`Hola, Vale.
+
+Si estás leyendo esto...
+
+Significa que abriste las tres cartas.
+
+Gracias por seguir este pequeño juego.
+
+Pero todavía queda un secreto.
+
+Uno que ha estado contigo desde la primera carta.
+
+Solo necesitabas una pequeña pista para descubrirlo.
+
+¿Lista para encontrarlo?`;
+
+function escribirCarta(){
+
+letterTitle.innerHTML="";
+
+letterText.innerHTML="";
+
+letterTitle.textContent="Hola, Vale ❤️";
+
+let i=0;
+
+function escribir(){
+
+if(i<mensajeCarta.length){
+
+letterText.innerHTML+=mensajeCarta.charAt(i);
+
+i++;
+
+setTimeout(escribir,28);
+
+}
+else{
+
+continueBtn.style.opacity=1;
+continueBtn.style.pointerEvents="auto";
+
+}
+
+}
+
+setTimeout(escribir,500);
+
+}
+
 function escribirTitulo(){
 
     if(i<titulo.length){
@@ -110,11 +164,52 @@ envelope.addEventListener("click",()=>{
         ease:"power3.out"
     },"-=0.2");
 
-    tl.to(letter,{
-        scale:1.03,
-        duration:.4,
-        yoyo:true,
-        repeat:1
+    tl.add(()=>{
+    
+    document.querySelector(".back").classList.add("blur");
+    document.querySelector(".front").classList.add("blur");
+    document.querySelector(".flap").classList.add("blur");
+    
+    gsap.to(letter,{
+    
+    duration:1.1,
+    
+    width:"90vw",
+    
+    height:"85vh",
+    
+    ease:"power3.inOut",
+    
+    onComplete:()=>{
+    
+    letter.classList.add("fullscreen");
+    
+    escribirCarta();
+    
+    }
+    
     });
+    
+    });
+
+    continueBtn.onclick=()=>{
+
+    gsap.to(letter,{
+    
+    opacity:0,
+    
+    scale:.95,
+    
+    duration:.8,
+    
+    onComplete:()=>{
+    
+    alert("Aquí empezará la escena del juego de las letras ocultas.");
+    
+    }
+    
+    });
+    
+    };
 
 });
