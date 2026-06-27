@@ -1,1367 +1,290 @@
-/*=================================================
-        RESET
-=================================================*/
+//=============================
+// MENSAJE DE BIENVENIDA
+//=============================
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+const titulo = "Hola, Vale 🌸";
 
-html{
-    scroll-behavior:smooth;
-}
+const texto =
+`Gracias por abrir las tres cartas.
 
-body{
+Todavía queda un pequeño secreto.
 
-    font-family:'Poppins',sans-serif;
+Y quiero descubrirlo contigo.`;
 
-    background:#0f172a;
 
-    color:white;
+let i = 0;
+let j = 0;
 
-    overflow:hidden;
+const h1 = document.getElementById("titulo");
+const p = document.getElementById("texto");
+const btn = document.getElementById("btn");
 
-    height:100vh;
+const scene1 = document.getElementById("scene1");
+const scene2 = document.getElementById("scene2");
 
-}
+const envelope = document.querySelector(".envelope");
+const flap = document.querySelector(".flap");
+const letter = document.querySelector(".letter");
 
 
-/*=================================================
-        FONDO
-=================================================*/
+//=============================
+// EFECTO MAQUINA DE ESCRIBIR
+//=============================
 
-#background{
+function escribirTitulo(){
 
-    position:fixed;
+    if(i < titulo.length){
 
-    inset:0;
+        h1.innerHTML += titulo.charAt(i);
 
-    background:
-        radial-gradient(circle at top,#2e4a6b 0%,#162235 45%,#0f172a 100%);
+        i++;
 
-    z-index:-10;
+        setTimeout(escribirTitulo,90);
 
-}
+    }else{
 
-
-/* Oscurece un poco los bordes */
-
-#background::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-    radial-gradient(circle,
-    transparent 45%,
-    rgba(0,0,0,.35));
-
-}
-
-
-/*=================================================
-        CONTENEDOR GENERAL
-=================================================*/
-
-.container{
-
-    width:100%;
-
-    height:100vh;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    padding:25px;
-
-}
-
-
-/*=================================================
-        TARJETA DE BIENVENIDA
-=================================================*/
-
-.card{
-
-    width:min(680px,92vw);
-
-    padding:50px;
-
-    border-radius:26px;
-
-    background:rgba(255,255,255,.08);
-
-    backdrop-filter:blur(18px);
-
-    border:1px solid rgba(255,255,255,.12);
-
-    box-shadow:
-
-        0 20px 60px rgba(0,0,0,.45),
-
-        inset 0 1px rgba(255,255,255,.08);
-
-    text-align:center;
-
-    animation:fadeUp 1.3s ease;
-
-}
-
-
-/*=================================================
-        TITULOS
-=================================================*/
-
-h1{
-
-    font-family:'Cormorant Garamond',serif;
-
-    font-size:58px;
-
-    font-weight:700;
-
-    margin-bottom:28px;
-
-    letter-spacing:1px;
-
-}
-
-h2{
-
-    font-family:'Cormorant Garamond',serif;
-
-}
-
-
-/*=================================================
-        PARRAFOS
-=================================================*/
-
-p{
-
-    font-size:20px;
-
-    line-height:1.9;
-
-    min-height:120px;
-
-    opacity:.95;
-
-}
-
-
-/*=================================================
-        BOTONES
-=================================================*/
-
-button{
-
-    margin-top:40px;
-
-    padding:15px 45px;
-
-    border:none;
-
-    border-radius:999px;
-
-    cursor:pointer;
-
-    background:#f8c8dc;
-
-    color:#3b3b3b;
-
-    font-size:18px;
-
-    font-weight:600;
-
-    transition:.35s;
-
-    opacity:0;
-
-    pointer-events:none;
-
-    box-shadow:
-
-        0 10px 25px rgba(248,200,220,.25);
-
-}
-
-button:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:
-
-        0 18px 35px rgba(248,200,220,.35);
-
-}
-
-button:active{
-
-    transform:scale(.97);
-
-}
-
-
-/*=================================================
-        ESCENAS
-=================================================*/
-
-.scene{
-
-    position:absolute;
-
-    inset:0;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    transition:1s;
-
-}
-
-.hidden{
-
-    opacity:0;
-
-    pointer-events:none;
-
-}
-
-
-/*=================================================
-        ANIMACIONES
-=================================================*/
-
-@keyframes fadeUp{
-
-    from{
-
-        opacity:0;
-
-        transform:
-
-        translateY(40px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-
-        translateY(0);
+        setTimeout(escribirTexto,500);
 
     }
 
 }
 
+function escribirTexto(){
 
-/*=================================================
-        ESTRELLAS
-=================================================*/
+    if(j < texto.length){
 
-.star{
+        if(texto[j] == "\n"){
 
-    position:absolute;
+            p.innerHTML += "<br>";
 
-    background:white;
+        }else{
 
-    border-radius:50%;
+            p.innerHTML += texto[j];
 
-    opacity:.75;
+        }
 
-    animation:twinkle infinite alternate;
+        j++;
 
-}
+        setTimeout(escribirTexto,35);
 
-@keyframes twinkle{
+    }else{
 
-    from{
-
-        opacity:.2;
-
-        transform:scale(.8);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:scale(1.15);
+        btn.style.opacity = "1";
+        btn.style.pointerEvents = "auto";
 
     }
 
 }
 
+escribirTitulo();
 
-/*=================================================
-        PÉTALOS
-=================================================*/
 
-.petal{
+//=============================
+// CAMBIO DE ESCENA
+//=============================
 
-    position:absolute;
+btn.onclick = ()=>{
 
-    top:-60px;
+    gsap.to(scene1,{
+        opacity:0,
+        duration:1
+    });
 
-    user-select:none;
+    setTimeout(()=>{
 
-    pointer-events:none;
+        scene1.classList.add("hidden");
 
-    animation:fall linear forwards;
+        scene2.classList.remove("hidden");
 
-    opacity:.92;
+        gsap.fromTo(scene2,
 
-}
+        {
+            opacity:0,
+            scale:.85
+        },
 
-@keyframes fall{
+        {
+            opacity:1,
+            scale:1,
+            duration:1,
+            ease:"power3.out"
+        });
 
-    0%{
+    },900);
 
-        transform:
+};
 
-        translateY(-80px)
 
-        rotate(0deg)
+//=============================
+// ANIMACIÓN DEL SOBRE
+//=============================
 
-        translateX(0);
+let abierto = false;
 
-    }
+envelope.addEventListener("click",()=>{
 
-    25%{
+    if(abierto) return;
 
-        transform:
+    abierto = true;
 
-        translateY(25vh)
+    envelope.style.pointerEvents="none";
 
-        rotate(120deg)
+    const tl = gsap.timeline();
 
-        translateX(18px);
+    // Abre la tapa
 
-    }
+    tl.to(flap,{
 
-    50%{
+        rotationX:180,
 
-        transform:
+        duration:1,
 
-        translateY(50vh)
+        ease:"power2.inOut"
 
-        rotate(240deg)
+    });
 
-        translateX(-15px);
+    // La carta asoma
 
-    }
+    tl.to(letter,{
 
-    75%{
+        y:-70,
 
-        transform:
+        duration:.8,
 
-        translateY(75vh)
+        ease:"power2.out"
 
-        rotate(360deg)
+    });
 
-        translateX(20px);
+    // Pausa
 
-    }
+    tl.to({},{
 
-    100%{
+        duration:.35
 
-        transform:
+    });
 
-        translateY(110vh)
+    // Sale completamente
 
-        rotate(520deg)
+    tl.to(letter,{
 
-        translateX(-18px);
+        y:-230,
 
-    }
+        duration:1.2,
 
-}
+        ease:"power3.out"
 
+    });
 
-/*=================================================
-        RESPONSIVE
-=================================================*/
+    // Rebote
 
-@media(max-width:768px){
+    tl.to(letter,{
 
-    .card{
+        scale:1.02,
 
-        padding:35px 25px;
+        duration:.25,
 
-    }
+        yoyo:true,
 
-    h1{
+        repeat:1
 
-        font-size:42px;
+    });
 
-    }
+    // Agrandar carta
 
-    p{
+    tl.to(letter,{
 
-        font-size:17px;
+        width:"88vw",
 
-        line-height:1.8;
+        height:"82vh",
 
-    }
+        borderRadius:"18px",
 
-    button{
+        duration:1,
 
-        width:100%;
+        ease:"power2.inOut"
 
-        font-size:17px;
+    });
 
-    }
+    // Centrar
 
-}
-/*=================================================
-                SOBRE
-=================================================*/
+    tl.to(letter,{
 
-.envelope{
+        x:0,
 
-    position:relative;
+        y:0,
 
-    width:340px;
+        duration:.8,
 
-    height:230px;
+        ease:"power2.inOut"
 
-    cursor:pointer;
+    });
 
-    display:flex;
+    // Aquí más adelante escribiremos la carta
 
-    justify-content:center;
+    tl.call(()=>{
 
-    align-items:center;
+        console.log("Carta lista.");
 
-    animation:floatEnvelope 4s ease-in-out infinite;
+    });
 
-    perspective:1200px;
+});
 
-    transform-style:preserve-3d;
 
-}
 
+//=============================
+// ESTRELLAS
+//=============================
 
-/*=========================
-        SOMBRA
-=========================*/
+for(let i=0;i<120;i++){
 
-.shadow{
+    let star=document.createElement("div");
 
-    position:absolute;
+    star.className="star";
 
-    bottom:-35px;
+    let size=Math.random()*3+1;
 
-    width:240px;
+    star.style.width=size+"px";
 
-    height:35px;
+    star.style.height=size+"px";
 
-    background:rgba(0,0,0,.35);
+    star.style.left=Math.random()*100+"vw";
 
-    border-radius:50%;
+    star.style.top=Math.random()*100+"vh";
 
-    filter:blur(18px);
+    star.style.animationDuration=Math.random()*2+1+"s";
 
-    animation:shadowMove 4s ease-in-out infinite;
-
-    z-index:-1;
-
-}
-
-
-/*=========================
-        CARTA
-=========================*/
-
-.letter{
-
-    position:absolute;
-
-    width:88%;
-
-    height:88%;
-
-    background:#fffdf8;
-
-    border-radius:10px;
-
-    padding:30px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    box-shadow:
-
-        0 15px 35px rgba(0,0,0,.18),
-
-        inset 0 0 30px rgba(255,240,220,.35);
-
-    z-index:4;
-
-    transform:translateY(95px);
-
-    transition:1s;
-
-    overflow:hidden;
+    document.body.appendChild(star);
 
 }
 
 
-/* Papel */
 
-.letter::before{
+//=============================
+// PÉTALOS
+//=============================
 
-    content:"";
+function crearPetalo(){
 
-    position:absolute;
+    let petal=document.createElement("div");
 
-    inset:0;
+    petal.className="petal";
 
-    background:
+    petal.innerHTML="🌸";
 
-    repeating-linear-gradient(
+    petal.style.left=Math.random()*100+"vw";
 
-        180deg,
+    petal.style.animationDuration=(Math.random()*6+8)+"s";
 
-        rgba(0,0,0,.02),
+    petal.style.fontSize=(Math.random()*18+18)+"px";
 
-        rgba(0,0,0,.02) 2px,
+    document.body.appendChild(petal);
 
-        transparent 2px,
+    setTimeout(()=>{
 
-        transparent 8px
+        petal.remove();
 
-    );
-
-    pointer-events:none;
-
-}
-
-
-/*=========================
-        PARTE TRASERA
-=========================*/
-
-.back{
-
-    position:absolute;
-
-    inset:0;
-
-    background:linear-gradient(
-
-        145deg,
-
-        #f9e9d5,
-
-        #efd2b1
-
-    );
-
-    border-radius:12px;
-
-    box-shadow:
-
-        inset 0 0 12px rgba(255,255,255,.45),
-
-        0 12px 30px rgba(0,0,0,.25);
+    },14000);
 
 }
 
-
-/*=========================
-        PARTE DELANTERA
-=========================*/
-
-.front{
-
-    position:absolute;
-
-    inset:0;
-
-    background:linear-gradient(
-
-        145deg,
-
-        #f1d7b9,
-
-        #e8c6a2
-
-    );
-
-    clip-path:polygon(
-
-        0 0,
-
-        50% 58%,
-
-        100% 0,
-
-        100% 100%,
-
-        0 100%
-
-    );
-
-    border-radius:12px;
-
-    z-index:8;
-
-}
-
-
-/*=========================
-        TAPA
-=========================*/
-
-.flap{
-
-    position:absolute;
-
-    inset:0;
-
-    background:linear-gradient(
-
-        145deg,
-
-        #f4dcc0,
-
-        #e7c39d
-
-    );
-
-    clip-path:polygon(
-
-        0 0,
-
-        50% 60%,
-
-        100% 0
-
-    );
-
-    transform-origin:top;
-
-    transform-style:preserve-3d;
-
-    z-index:10;
-
-}
-
-
-/*=========================
-        BRILLO
-=========================*/
-
-.envelope::after{
-
-    content:"";
-
-    position:absolute;
-
-    top:-60%;
-
-    left:-70%;
-
-    width:45%;
-
-    height:220%;
-
-    background:
-
-    linear-gradient(
-
-        90deg,
-
-        transparent,
-
-        rgba(255,255,255,.55),
-
-        transparent
-
-    );
-
-    transform:rotate(25deg);
-
-    animation:shine 6s infinite;
-
-    pointer-events:none;
-
-}
-
-
-/*=========================
-        TEXTO
-=========================*/
-
-.letter h2{
-
-    font-family:'Cormorant Garamond',serif;
-
-    font-size:36px;
-
-    color:#cf7097;
-
-    margin-bottom:18px;
-
-    z-index:2;
-
-}
-
-.letter p{
-
-    color:#5a5a5a;
-
-    font-size:18px;
-
-    text-align:center;
-
-    line-height:1.8;
-
-    z-index:2;
-
-}
-
-
-/*=========================
-        CARTA GRANDE
-=========================*/
-
-#letterText{
-
-    margin-top:25px;
-
-    color:#555;
-
-    line-height:1.9;
-
-    font-size:18px;
-
-    white-space:pre-line;
-
-    text-align:left;
-
-    min-height:180px;
-
-}
-
-#continueBtn{
-
-    margin-top:35px;
-
-    opacity:0;
-
-    pointer-events:none;
-
-}
-
-
-/*=========================
-        FULLSCREEN
-=========================*/
-
-.fullscreen{
-
-    position:fixed !important;
-
-    top:50%;
-
-    left:50%;
-
-    transform:translate(-50%,-50%) !important;
-
-    width:min(92vw,720px) !important;
-
-    height:85vh !important;
-
-    border-radius:22px;
-
-    background:#fffefb;
-
-    z-index:999;
-
-    padding:45px;
-
-    overflow:auto;
-
-    box-shadow:
-
-        0 40px 80px rgba(0,0,0,.45);
-
-}
-
-
-/*=========================
-        DESENFOQUE
-=========================*/
-
-.blur{
-
-    filter:blur(8px);
-
-    opacity:.4;
-
-    transition:1s;
-
-}
-
-
-/*=========================
-        ANIMACIONES
-=========================*/
-
-@keyframes floatEnvelope{
-
-    0%{
-
-        transform:translateY(0);
-
-    }
-
-    50%{
-
-        transform:translateY(-12px);
-
-    }
-
-    100%{
-
-        transform:translateY(0);
-
-    }
-
-}
-
-
-@keyframes shadowMove{
-
-    0%{
-
-        transform:scale(1);
-
-        opacity:.35;
-
-    }
-
-    50%{
-
-        transform:scale(.9);
-
-        opacity:.22;
-
-    }
-
-    100%{
-
-        transform:scale(1);
-
-        opacity:.35;
-
-    }
-
-}
-
-
-@keyframes shine{
-
-    0%{
-
-        left:-70%;
-
-    }
-
-    100%{
-
-        left:140%;
-
-    }
-
-}
-
-
-/*=================================================
-        RESPONSIVE SOBRE
-=================================================*/
-
-@media(max-width:768px){
-
-    .envelope{
-
-        width:300px;
-
-        height:205px;
-
-    }
-
-    .letter{
-
-        padding:22px;
-
-    }
-
-    .letter h2{
-
-        font-size:30px;
-
-    }
-
-    .letter p{
-
-        font-size:16px;
-
-    }
-
-}
-/*=================================================
-        LUZ DE LUNA
-=================================================*/
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    width:420px;
-
-    height:420px;
-
-    border-radius:50%;
-
-    top:-140px;
-
-    right:-80px;
-
-    background:radial-gradient(circle,
-    rgba(255,255,255,.18),
-    rgba(255,255,255,.04),
-    transparent 70%);
-
-    filter:blur(8px);
-
-    z-index:-8;
-
-}
-
-
-/*=================================================
-        AURORA SUAVE
-=================================================*/
-
-body::after{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    background:
-
-    radial-gradient(circle at bottom,
-
-    rgba(255,180,220,.05),
-
-    transparent 55%);
-
-    animation:aurora 12s ease-in-out infinite alternate;
-
-    z-index:-9;
-
-}
-
-
-@keyframes aurora{
-
-    from{
-
-        transform:translateX(-30px);
-
-    }
-
-    to{
-
-        transform:translateX(40px);
-
-    }
-
-}
-
-
-/*=================================================
-        RESPLANDOR DEL SOBRE
-=================================================*/
-
-.envelope::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:520px;
-
-    height:520px;
-
-    border-radius:50%;
-
-    background:
-
-    radial-gradient(circle,
-
-    rgba(255,240,220,.18),
-
-    transparent 72%);
-
-    filter:blur(40px);
-
-    z-index:-2;
-
-}
-
-
-/*=================================================
-        EFECTO CRISTAL
-=================================================*/
-
-.card{
-
-    background:
-
-    linear-gradient(
-
-    145deg,
-
-    rgba(255,255,255,.11),
-
-    rgba(255,255,255,.05));
-
-}
-
-
-/*=================================================
-        SOMBRAS
-=================================================*/
-
-.card:hover{
-
-    transform:translateY(-6px);
-
-    transition:.5s;
-
-}
-
-
-/*=================================================
-        BOTÓN
-=================================================*/
-
-button{
-
-    background:
-
-    linear-gradient(
-
-    135deg,
-
-    #ffd7e8,
-
-    #ffc1da);
-
-}
-
-
-button:hover{
-
-    transform:
-
-    translateY(-5px)
-
-    scale(1.03);
-
-}
-
-
-/*=================================================
-        CARTA
-=================================================*/
-
-.letter{
-
-    background:
-
-    linear-gradient(
-
-    white,
-
-    #fffdf8);
-
-}
-
-
-/* Papel */
-
-.letter::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background-image:
-
-    radial-gradient(
-
-    rgba(0,0,0,.025) 1px,
-
-    transparent 1px);
-
-    background-size:14px 14px;
-
-    opacity:.35;
-
-    pointer-events:none;
-
-}
-
-
-/*=================================================
-        SELLO
-=================================================*/
-
-.letter .seal{
-
-    position:absolute;
-
-    bottom:22px;
-
-    right:25px;
-
-    width:70px;
-
-    height:70px;
-
-    border-radius:50%;
-
-    background:
-
-    radial-gradient(circle,
-
-    #ff8db8,
-
-    #d94c87);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    color:white;
-
-    font-size:26px;
-
-    box-shadow:
-
-    0 8px 20px rgba(0,0,0,.25);
-
-    animation:pulseSeal 3s infinite;
-
-}
-
-
-@keyframes pulseSeal{
-
-    0%{
-
-        transform:scale(1);
-
-    }
-
-    50%{
-
-        transform:scale(1.05);
-
-    }
-
-    100%{
-
-        transform:scale(1);
-
-    }
-
-}
-
-
-/*=================================================
-        SCROLL
-=================================================*/
-
-.fullscreen::-webkit-scrollbar{
-
-    width:8px;
-
-}
-
-.fullscreen::-webkit-scrollbar-thumb{
-
-    background:#f3bfd4;
-
-    border-radius:20px;
-
-}
-
-
-/*=================================================
-        ANIMACIÓN CARTA
-=================================================*/
-
-@keyframes paperAppear{
-
-    from{
-
-        opacity:0;
-
-        transform:
-
-        translateY(50px)
-
-        scale(.95);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-
-        translateY(0)
-
-        scale(1);
-
-    }
-
-}
-
-
-/*=================================================
-        TITULO CARTA
-=================================================*/
-
-#letterTitle{
-
-    color:#cf7097;
-
-    font-size:42px;
-
-    margin-bottom:20px;
-
-    text-align:center;
-
-}
-
-
-/*=================================================
-        TEXTO CARTA
-=================================================*/
-
-#letterText{
-
-    font-size:19px;
-
-    line-height:2;
-
-    color:#555;
-
-}
-
-
-/*=================================================
-        CONTINUAR
-=================================================*/
-
-#continueBtn{
-
-    align-self:center;
-
-}
-
-
-/*=================================================
-        EFECTO FOCUS
-=================================================*/
-
-.focus{
-
-    filter:blur(6px);
-
-    opacity:.25;
-
-}
-
-
-/*=================================================
-        RESPONSIVE
-=================================================*/
-
-@media(max-width:600px){
-
-body::before{
-
-display:none;
-
-}
-
-.envelope{
-
-width:270px;
-
-height:190px;
-
-}
-
-.fullscreen{
-
-width:94vw !important;
-
-height:88vh !important;
-
-padding:30px;
-
-}
-
-#letterTitle{
-
-font-size:34px;
-
-}
-
-#letterText{
-
-font-size:17px;
-
-line-height:1.8;
-
-}
-
-}
+setInterval(crearPetalo,450);
