@@ -1,80 +1,41 @@
-const titulo="Hola, Vale 🌸";
+//=============================
+// MENSAJE DE BIENVENIDA
+//=============================
 
-const texto="Gracias por abrir las tres cartas.\n\nTodavía queda un pequeño secreto.\n\nY quiero descubrirlo contigo.";
+const titulo = "Hola, Vale 🌸";
 
-let i=0;
-let j=0;
+const texto =
+`Gracias por abrir las tres cartas.
 
-const h1=document.getElementById("titulo");
-const p=document.getElementById("texto");
-const btn=document.getElementById("btn");
+Todavía queda un pequeño secreto.
 
-const scene1=document.getElementById("scene1");
-const scene2=document.getElementById("scene2");
+Y quiero descubrirlo contigo.`;
 
-const envelope=document.querySelector(".envelope");
-const flap=document.querySelector(".flap");
-const letter=document.querySelector(".letter");
 
-const letterTitle=document.getElementById("letterTitle");
-const letterText=document.getElementById("letterText");
-const continueBtn=document.getElementById("continueBtn");
+let i = 0;
+let j = 0;
 
-const mensajeCarta=`Hola, Vale.
+const h1 = document.getElementById("titulo");
+const p = document.getElementById("texto");
+const btn = document.getElementById("btn");
 
-Si estás leyendo esto...
+const scene1 = document.getElementById("scene1");
+const scene2 = document.getElementById("scene2");
 
-Significa que abriste las tres cartas.
+const envelope = document.querySelector(".envelope");
+const flap = document.querySelector(".flap");
+const letter = document.querySelector(".letter");
 
-Gracias por seguir este pequeño juego.
 
-Pero todavía queda un secreto.
-
-Uno que ha estado contigo desde la primera carta.
-
-Solo necesitabas una pequeña pista para descubrirlo.
-
-¿Lista para encontrarlo?`;
-
-function escribirCarta(){
-
-letterTitle.innerHTML="";
-
-letterText.innerHTML="";
-
-letterTitle.textContent="Hola, Vale ❤️";
-
-let i=0;
-
-function escribir(){
-
-if(i<mensajeCarta.length){
-
-letterText.innerHTML+=mensajeCarta.charAt(i);
-
-i++;
-
-setTimeout(escribir,28);
-
-}
-else{
-
-continueBtn.style.opacity=1;
-continueBtn.style.pointerEvents="auto";
-
-}
-
-}
-
-setTimeout(escribir,500);
-
-}
+//=============================
+// EFECTO MAQUINA DE ESCRIBIR
+//=============================
 
 function escribirTitulo(){
 
-    if(i<titulo.length){
+    if(i < titulo.length){
 
-        h1.innerHTML+=titulo.charAt(i);
+        h1.innerHTML += titulo.charAt(i);
 
         i++;
 
@@ -90,15 +51,17 @@ function escribirTitulo(){
 
 function escribirTexto(){
 
-    if(j<texto.length){
+    if(j < texto.length){
 
-        if(texto[j]=="\n")
+        if(texto[j] == "\n"){
 
-            p.innerHTML+="<br>";
+            p.innerHTML += "<br>";
 
-        else
+        }else{
 
-            p.innerHTML+=texto[j];
+            p.innerHTML += texto[j];
+
+        }
 
         j++;
 
@@ -106,8 +69,8 @@ function escribirTexto(){
 
     }else{
 
-        btn.style.opacity=1;
-        btn.style.pointerEvents="auto";
+        btn.style.opacity = "1";
+        btn.style.pointerEvents = "auto";
 
     }
 
@@ -115,7 +78,12 @@ function escribirTexto(){
 
 escribirTitulo();
 
-btn.onclick=()=>{
+
+//=============================
+// CAMBIO DE ESCENA
+//=============================
+
+btn.onclick = ()=>{
 
     gsap.to(scene1,{
         opacity:0,
@@ -129,87 +97,194 @@ btn.onclick=()=>{
         scene2.classList.remove("hidden");
 
         gsap.fromTo(scene2,
+
         {
             opacity:0,
             scale:.85
         },
+
         {
             opacity:1,
             scale:1,
-            duration:1.2,
+            duration:1,
             ease:"power3.out"
         });
 
-    },1000);
+    },900);
 
-}
+};
 
-/* SOBRE */
+
+//=============================
+// ANIMACIÓN DEL SOBRE
+//=============================
+
+let abierto = false;
 
 envelope.addEventListener("click",()=>{
 
+    if(abierto) return;
+
+    abierto = true;
+
     envelope.style.pointerEvents="none";
 
-    let tl=gsap.timeline();
+    const tl = gsap.timeline();
+
+    // Abre la tapa
 
     tl.to(flap,{
+
         rotationX:180,
+
         duration:1,
+
         ease:"power2.inOut"
+
     });
+
+    // La carta asoma
 
     tl.to(letter,{
-        y:-180,
-        duration:1.3,
+
+        y:-70,
+
+        duration:.8,
+
+        ease:"power2.out"
+
+    });
+
+    // Pausa
+
+    tl.to({},{
+
+        duration:.35
+
+    });
+
+    // Sale completamente
+
+    tl.to(letter,{
+
+        y:-230,
+
+        duration:1.2,
+
         ease:"power3.out"
-    },"-=0.2");
 
-    tl.add(()=>{
-    
-    document.querySelector(".back").classList.add("blur");
-    document.querySelector(".front").classList.add("blur");
-    document.querySelector(".flap").classList.add("blur");
-    
-    gsap.to(letter,{
-    
-    duration:1.1,
-    
-    width:"90vw",
-    
-    height:"85vh",
-    
-    ease:"power3.inOut",
-    
-    onComplete:()=>{
-    
-    letter.classList.add("fullscreen");
-    
-    escribirCarta();
-    
-    }
-    
-    });
-    
     });
 
-    continueBtn.onclick=()=>{
+    // Rebote
 
-    gsap.to(letter,{
-    
-    opacity:0,
-    
-    scale:.95,
-    
-    duration:.8,
-    
-    onComplete:()=>{
-    
-    alert("Aquí empezará la escena del juego de las letras ocultas.");
-    
-    }
-    
+    tl.to(letter,{
+
+        scale:1.02,
+
+        duration:.25,
+
+        yoyo:true,
+
+        repeat:1
+
     });
-    
-    };
+
+    // Agrandar carta
+
+    tl.to(letter,{
+
+        width:"88vw",
+
+        height:"82vh",
+
+        borderRadius:"18px",
+
+        duration:1,
+
+        ease:"power2.inOut"
+
+    });
+
+    // Centrar
+
+    tl.to(letter,{
+
+        x:0,
+
+        y:0,
+
+        duration:.8,
+
+        ease:"power2.inOut"
+
+    });
+
+    // Aquí más adelante escribiremos la carta
+
+    tl.call(()=>{
+
+        console.log("Carta lista.");
+
+    });
 
 });
+
+
+
+//=============================
+// ESTRELLAS
+//=============================
+
+for(let i=0;i<120;i++){
+
+    let star=document.createElement("div");
+
+    star.className="star";
+
+    let size=Math.random()*3+1;
+
+    star.style.width=size+"px";
+
+    star.style.height=size+"px";
+
+    star.style.left=Math.random()*100+"vw";
+
+    star.style.top=Math.random()*100+"vh";
+
+    star.style.animationDuration=Math.random()*2+1+"s";
+
+    document.body.appendChild(star);
+
+}
+
+
+
+//=============================
+// PÉTALOS
+//=============================
+
+function crearPetalo(){
+
+    let petal=document.createElement("div");
+
+    petal.className="petal";
+
+    petal.innerHTML="🌸";
+
+    petal.style.left=Math.random()*100+"vw";
+
+    petal.style.animationDuration=(Math.random()*6+8)+"s";
+
+    petal.style.fontSize=(Math.random()*18+18)+"px";
+
+    document.body.appendChild(petal);
+
+    setTimeout(()=>{
+
+        petal.remove();
+
+    },14000);
+
+}
+
+setInterval(crearPetalo,450);
