@@ -436,9 +436,9 @@ button:active{
 
     position:relative;
 
-    width:340px;
+    width:430px;
 
-    height:230px;
+    height:290px;
 
     cursor:pointer;
 
@@ -572,9 +572,9 @@ button:active{
 
         145deg,
 
-        #f9e9d5,
+        #fffefb,
 
-        #efd2b1
+        #fdf8f0
 
     );
 
