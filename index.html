@@ -15,7 +15,7 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 
@@ -24,20 +24,21 @@
 <body>
 
     <!-- Fondo -->
+
     <div id="background"></div>
 
-    <!-- Contenedor de pétalos -->
-    <div id="petals"></div>
 
-    <!-- ===========================
-            ESCENA 1
-    ============================ -->
 
-    <section class="scene" id="scene1">
+    <!--==========================================
+                    ESCENA 1
+        Bienvenida
+    ===========================================-->
+
+    <section class="scene active" id="scene1">
 
         <div class="container">
 
-            <div class="card" id="welcomeCard">
+            <div class="card">
 
                 <h1 id="titulo"></h1>
 
@@ -45,9 +46,15 @@
 
                 <button id="btn">
 
-                    Comenzar ❤️
+                    Continuar ❤️
 
                 </button>
+
+                <small id="firma">
+
+                    Hecho con mucho cariño para ti.
+
+                </small>
 
             </div>
 
@@ -57,31 +64,49 @@
 
 
 
-    <!-- ===========================
-            ESCENA 2
-    ============================ -->
+    <!--==========================================
+                    ESCENA 2
+                    SOBRE
+    ===========================================-->
 
     <section class="scene hidden" id="scene2">
 
-        <div class="envelope">
+        <div class="container">
 
-            <div class="shadow"></div>
+            <div class="envelope">
 
-            <div class="back"></div>
+                <div class="shadow"></div>
 
-            <div class="letter" id="letter">
+                <div class="back"></div>
 
-                <h2 id="letterTitle">
+                <div class="letter-mini"></div>
 
-                    Para Vale ❤️
+                <div class="front"></div>
 
-                </h2>
+                <div class="flap"></div>
 
-                <div id="letterText">
+            </div>
 
-                    Hay un pequeño secreto esperándote...
+        </div>
 
-                </div>
+    </section>
+
+
+
+    <!--==========================================
+                    ESCENA 3
+                    CARTA
+    ===========================================-->
+
+    <section class="scene hidden" id="scene3">
+
+        <div class="container">
+
+            <div class="letter-full">
+
+                <h2 id="letterTitle"></h2>
+
+                <div id="letterText"></div>
 
                 <button id="continueBtn">
 
@@ -89,85 +114,40 @@
 
                 </button>
 
-                <!-- Sello -->
-
-                <div class="seal">
-
-                    ❤️
-
-                </div>
-
             </div>
 
-            <div class="front"></div>
-
-            <div class="flap"></div>
-
         </div>
 
     </section>
 
 
 
-    <!-- ===========================
-            ESCENA 3
-            (La construiremos
-             en la Fase 3)
-    ============================ -->
-
-    <section class="scene hidden" id="scene3">
-
-        <div class="card">
-
-            <h1>
-
-                Hay un pequeño reto...
-
-            </h1>
-
-            <p>
-
-                Vuelve a leer las tres cartas.
-
-                <br><br>
-
-                Pero esta vez...
-
-                <br><br>
-
-                Lee únicamente las letras escritas en
-
-                <strong>MAYÚSCULA.</strong>
-
-            </p>
-
-            <button id="gameBtn">
-
-                Ya lo descubrí ❤️
-
-            </button>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ===========================
-            ESCENA 4
-    ============================ -->
+    <!--==========================================
+                    ESCENA 4
+                    PISTA
+    ===========================================-->
 
     <section class="scene hidden" id="scene4">
 
-        <div class="card">
+        <div class="container">
 
-            <h1 id="finalTitle">
+            <div class="card">
 
-            </h1>
+                <h1 id="hintTitle">
 
-            <p id="finalMessage">
+                </h1>
 
-            </p>
+                <p id="hintText">
+
+                </p>
+
+                <button id="gameBtn">
+
+                    Ya lo descubrí ❤️
+
+                </button>
+
+            </div>
 
         </div>
 
@@ -175,11 +155,34 @@
 
 
 
-    <!-- Librería GSAP -->
+    <!--==========================================
+                    ESCENA 5
+                    MENSAJE
+    ===========================================-->
+
+    <section class="scene hidden" id="scene5">
+
+        <div class="container">
+
+            <div class="card">
+
+                <h1 id="finalTitle"></h1>
+
+                <p id="finalMessage"></p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!--==========================================
+                    LIBRERÍAS
+    ===========================================-->
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-
-    <!-- Nuestro JavaScript -->
 
     <script src="script.js"></script>
 
