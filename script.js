@@ -309,21 +309,37 @@ function abrirSobre(){
 
 const carta = {
 
-titulo:"Para ti ❤️",
+titulo:"La cuarta carta 🌸",
 
 texto:
 
-`No quería que este puente fuera solamente
-un par de días sin vernos.
+`Si estás leyendo esto...
 
-Quise dejarte algo que pudiera hacerte sonreír
-aunque fuera por un momento.
+significa que las tres cartas llegaron a su destino.
 
-Si estás leyendo esto...
+Durante este puente no podía hacer mucho para acompañarte...
 
-significa que aceptaste seguir este pequeño juego.
+pero sí podía dejarte una pequeña sorpresa.
 
-Y todavía queda una última cosa por descubrir...`
+Por eso esta no es una carta cualquiera.
+
+Es la cuarta.
+
+La única que no podía escribir sobre papel.
+
+Quería que hicieras un pequeño recorrido.
+
+Que cada paso te llevara al siguiente.
+
+Y que, al final, descubrieras algo que estuvo escondido desde el principio.
+
+Porque las cosas bonitas...
+
+a veces se disfrutan más cuando se descubren poco a poco.
+
+Y todavía queda un último paso.
+
+¿Me acompañas? ❤️`
 
 };
 
@@ -445,24 +461,31 @@ continueBtn.addEventListener("click",()=>{
                 LA PISTA
 ==================================================*/
 
-const pista = {
+const pista={
 
-    titulo:"Todavía falta una última cosa... 🌸",
+titulo:"Antes de terminar...",
 
-    texto:
-`Las tres cartas tenían un pequeño detalle escondido.
+texto:
 
-No estaba al principio.
+`Las tres cartas escondían un pequeño secreto.
 
-No estaba al final.
+No estaba escrito al principio.
 
-Estuvo frente a tus ojos todo este tiempo.
+Tampoco al final.
 
-Vuelve a leerlas...
+Siempre estuvo ahí.
 
-pero esta vez observa únicamente las letras MAYÚSCULAS.
+Esperando a que alguien suficientemente curioso lo encontrara.
 
-Ellas tienen algo que decirte ❤️`
+Solo necesitas volver a leerlas.
+
+Pero esta vez...
+
+observa únicamente las letras MAYÚSCULAS.
+
+Ellas llevan escondido el verdadero mensaje.
+
+Nos vemos aquí cuando lo descubras. ❤️`
 
 };
 
