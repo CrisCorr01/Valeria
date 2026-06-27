@@ -3,133 +3,118 @@ const titulo="Hola, Vale 🌸";
 const texto="Gracias por abrir las tres cartas.\n\nTodavía queda un pequeño secreto.\n\nY quiero descubrirlo contigo.";
 
 let i=0;
-
 let j=0;
 
 const h1=document.getElementById("titulo");
-
 const p=document.getElementById("texto");
-
 const btn=document.getElementById("btn");
+
+const scene1=document.getElementById("scene1");
+const scene2=document.getElementById("scene2");
+
+const envelope=document.querySelector(".envelope");
+const flap=document.querySelector(".flap");
+const letter=document.querySelector(".letter");
 
 function escribirTitulo(){
 
-if(i<titulo.length){
+    if(i<titulo.length){
 
-h1.innerHTML+=titulo.charAt(i);
+        h1.innerHTML+=titulo.charAt(i);
 
-i++;
+        i++;
 
-setTimeout(escribirTitulo,90);
+        setTimeout(escribirTitulo,90);
 
-}
+    }else{
 
-else{
+        setTimeout(escribirTexto,500);
 
-setTimeout(escribirTexto,500);
-
-}
+    }
 
 }
 
 function escribirTexto(){
 
-if(j<texto.length){
+    if(j<texto.length){
 
-if(texto.charAt(j)=="\n"){
+        if(texto[j]=="\n")
 
-p.innerHTML+="<br>";
+            p.innerHTML+="<br>";
 
-}else{
+        else
 
-p.innerHTML+=texto.charAt(j);
+            p.innerHTML+=texto[j];
 
-}
+        j++;
 
-j++;
+        setTimeout(escribirTexto,35);
 
-setTimeout(escribirTexto,35);
+    }else{
 
-}
+        btn.style.opacity=1;
+        btn.style.pointerEvents="auto";
 
-else{
-
-btn.style.opacity=1;
-
-btn.style.pointerEvents="auto";
-
-}
+    }
 
 }
 
 escribirTitulo();
 
-/* BOTÓN */
-
 btn.onclick=()=>{
 
-document.getElementById("scene1").style.opacity="0";
+    gsap.to(scene1,{
+        opacity:0,
+        duration:1
+    });
 
-setTimeout(()=>{
+    setTimeout(()=>{
 
-document.getElementById("scene1").classList.add("hidden");
+        scene1.classList.add("hidden");
 
-document.getElementById("scene2").classList.remove("hidden");
+        scene2.classList.remove("hidden");
 
-document.getElementById("scene2").style.opacity="1";
+        gsap.fromTo(scene2,
+        {
+            opacity:0,
+            scale:.85
+        },
+        {
+            opacity:1,
+            scale:1,
+            duration:1.2,
+            ease:"power3.out"
+        });
 
-},900);
-
-};
-
-/* ESTRELLAS */
-
-for(let i=0;i<120;i++){
-
-let star=document.createElement("div");
-
-star.className="star";
-
-let size=Math.random()*3+1;
-
-star.style.width=size+"px";
-
-star.style.height=size+"px";
-
-star.style.left=Math.random()*100+"vw";
-
-star.style.top=Math.random()*100+"vh";
-
-star.style.animationDuration=Math.random()*2+1+"s";
-
-document.body.appendChild(star);
+    },1000);
 
 }
 
-/* PÉTALOS */
+/* SOBRE */
 
-function crearPetalo(){
+envelope.addEventListener("click",()=>{
 
-let p=document.createElement("div");
+    envelope.style.pointerEvents="none";
 
-p.className="petal";
+    let tl=gsap.timeline();
 
-p.innerHTML="🌸";
+    tl.to(flap,{
+        rotationX:180,
+        duration:1,
+        ease:"power2.inOut"
+    });
 
-p.style.left=Math.random()*100+"vw";
+    tl.to(letter,{
+        y:-180,
+        duration:1.3,
+        ease:"power3.out"
+    },"-=0.2");
 
-p.style.animationDuration=Math.random()*6+8+"s";
+    tl.to(letter,{
+        scale:1.03,
+        duration:.4,
+        yoyo:true,
+        repeat:1
+    });
 
-p.style.fontSize=Math.random()*18+18+"px";
-
-document.body.appendChild(p);
-
-setTimeout(()=>{
-
-p.remove();
-
-},14000);
-
-}
-
-setInterval(crearPetalo,450);
+});
