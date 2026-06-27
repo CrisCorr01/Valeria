@@ -708,116 +708,7 @@ function escribirTextoFinal(){
     }
 
 }
-/*==================================================
-                FASE 5
-                FINAL
-==================================================*/
 
-const final = {
-
-titulo:"Ahora ya lo sabes... ❤️",
-
-mensaje:
-
-`Si llegaste hasta aquí...
-
-es porque descubriste el pequeño secreto escondido entre las tres cartas.
-
-La verdad es que nunca fue solamente un juego.
-
-Fue una forma distinta de acompañarte durante estos días en los que no podíamos vernos.
-
-Y si después de todo este recorrido logré sacarte aunque fuera una sonrisa...
-
-entonces todo valió la pena.
-
-Gracias por abrir las cartas.
-
-Gracias por llegar hasta aquí.
-
-Y, sobre todo...
-
-gracias por ser tú.
-
-🌸❤️`
-
-};
-
-let indiceFinalTitulo = 0;
-let indiceFinalTexto = 0;
-
-
-/*==================================================
-            INICIAR FINAL
-==================================================*/
-
-function iniciarFinal(){
-
-    finalTitle.innerHTML = "";
-    finalMessage.innerHTML = "";
-
-    indiceFinalTitulo = 0;
-    indiceFinalTexto = 0;
-
-    escribirTituloFinal();
-
-}
-
-
-/*==================================================
-            TÍTULO
-==================================================*/
-
-function escribirTituloFinal(){
-
-    if(indiceFinalTitulo < final.titulo.length){
-
-        finalTitle.innerHTML += final.titulo.charAt(indiceFinalTitulo);
-
-        indiceFinalTitulo++;
-
-        setTimeout(escribirTituloFinal,70);
-
-    }
-
-    else{
-
-        setTimeout(escribirTextoFinal,500);
-
-    }
-
-}
-
-
-/*==================================================
-            TEXTO
-==================================================*/
-
-function escribirTextoFinal(){
-
-    if(indiceFinalTexto < final.mensaje.length){
-
-        const letra = final.mensaje.charAt(indiceFinalTexto);
-
-        if(letra == "\n"){
-
-            finalMessage.innerHTML += "<br>";
-
-        }
-
-        else{
-
-            finalMessage.innerHTML += letra;
-
-        }
-
-        indiceFinalTexto++;
-
-        setTimeout(escribirTextoFinal,28);
-
-    }
-
-}
 /*==================================================
             CAMBIO DE ESCENA
 ==================================================*/
@@ -873,7 +764,7 @@ function cambiarEscena(actual,siguiente){
                 EFECTO ESCRIBIR
 ==================================================*/
 
-function escribirTexto(elemento,texto,velocidad,callback){
+function efectoEscribir(elemento,texto,velocidad,callback){
 
     let i=0;
 
