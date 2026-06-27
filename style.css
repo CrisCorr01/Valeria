@@ -795,6 +795,47 @@ body{
 
 }
 
+/*==================================================
+                CARTAS DE LA PISTA
+==================================================*/
+
+#letters{
+
+    margin-top:35px;
+
+    font-size:48px;
+
+    letter-spacing:18px;
+
+    text-align:center;
+
+    opacity:.9;
+
+    animation:flotarCartas 3s ease-in-out infinite;
+
+}
+
+@keyframes flotarCartas{
+
+    0%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-8px);
+
+    }
+
+    100%{
+
+        transform:translateY(0px);
+
+    }
+
+}
 
 /*==================================================
             DECORACIÓN SUPERIOR
