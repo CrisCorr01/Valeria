@@ -343,6 +343,10 @@ box-shadow:0 10px 25px rgba(0,0,0,.15);
 
 z-index:2;
 
+transform:translateY(55px);
+
+opacity:.95;
+
 transition:1s;
 
 }
@@ -432,6 +436,65 @@ transform:translateY(-12px);
 100%{
 
 transform:translateY(0px);
+
+}
+
+}
+/* Cursor */
+
+.envelope{
+
+cursor:pointer;
+
+}
+
+/* Brillo */
+
+.envelope::after{
+
+content:"";
+
+position:absolute;
+
+top:-40%;
+
+left:-60%;
+
+width:40%;
+
+height:180%;
+
+background:linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.45),
+
+transparent
+
+);
+
+transform:rotate(25deg);
+
+animation:shine 5s infinite;
+
+pointer-events:none;
+
+}
+
+@keyframes shine{
+
+0%{
+
+left:-70%;
+
+}
+
+100%{
+
+left:140%;
 
 }
 
