@@ -1,294 +1,1367 @@
-//=============================
-// MENSAJE DE BIENVENIDA
-//=============================
+/*=================================================
+        RESET
+=================================================*/
 
-const titulo = "Hola, Vale 🌸";
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-const texto =
-`Gracias por abrir las tres cartas.
+html{
+    scroll-behavior:smooth;
+}
 
-Todavía queda un pequeño secreto.
+body{
 
-Y quiero descubrirlo contigo.`;
+    font-family:'Poppins',sans-serif;
 
+    background:#0f172a;
 
-let i = 0;
-let j = 0;
+    color:white;
 
-const h1 = document.getElementById("titulo");
-const p = document.getElementById("texto");
-const btn = document.getElementById("btn");
+    overflow:hidden;
 
-const scene1 = document.getElementById("scene1");
-const scene2 = document.getElementById("scene2");
+    height:100vh;
 
-const envelope = document.querySelector(".envelope");
-const flap = document.querySelector(".flap");
-const front=document.querySelector(".front");
-const back=document.querySelector(".back");
-const shadow=document.querySelector(".shadow");
-const background=document.getElementById("background");
-const letter = document.querySelector(".letter");
+}
 
 
-//=============================
-// EFECTO MAQUINA DE ESCRIBIR
-//=============================
+/*=================================================
+        FONDO
+=================================================*/
 
-function escribirTitulo(){
+#background{
 
-    if(i < titulo.length){
+    position:fixed;
 
-        h1.innerHTML += titulo.charAt(i);
+    inset:0;
 
-        i++;
+    background:
+        radial-gradient(circle at top,#2e4a6b 0%,#162235 45%,#0f172a 100%);
 
-        setTimeout(escribirTitulo,90);
+    z-index:-10;
 
-    }else{
+}
 
-        setTimeout(escribirTexto,500);
+
+/* Oscurece un poco los bordes */
+
+#background::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+    radial-gradient(circle,
+    transparent 45%,
+    rgba(0,0,0,.35));
+
+}
+
+
+/*=================================================
+        CONTENEDOR GENERAL
+=================================================*/
+
+.container{
+
+    width:100%;
+
+    height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:25px;
+
+}
+
+
+/*=================================================
+        TARJETA DE BIENVENIDA
+=================================================*/
+
+.card{
+
+    width:min(680px,92vw);
+
+    padding:50px;
+
+    border-radius:26px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+
+        0 20px 60px rgba(0,0,0,.45),
+
+        inset 0 1px rgba(255,255,255,.08);
+
+    text-align:center;
+
+    animation:fadeUp 1.3s ease;
+
+}
+
+
+/*=================================================
+        TITULOS
+=================================================*/
+
+h1{
+
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:58px;
+
+    font-weight:700;
+
+    margin-bottom:28px;
+
+    letter-spacing:1px;
+
+}
+
+h2{
+
+    font-family:'Cormorant Garamond',serif;
+
+}
+
+
+/*=================================================
+        PARRAFOS
+=================================================*/
+
+p{
+
+    font-size:20px;
+
+    line-height:1.9;
+
+    min-height:120px;
+
+    opacity:.95;
+
+}
+
+
+/*=================================================
+        BOTONES
+=================================================*/
+
+button{
+
+    margin-top:40px;
+
+    padding:15px 45px;
+
+    border:none;
+
+    border-radius:999px;
+
+    cursor:pointer;
+
+    background:#f8c8dc;
+
+    color:#3b3b3b;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    box-shadow:
+
+        0 10px 25px rgba(248,200,220,.25);
+
+}
+
+button:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:
+
+        0 18px 35px rgba(248,200,220,.35);
+
+}
+
+button:active{
+
+    transform:scale(.97);
+
+}
+
+
+/*=================================================
+        ESCENAS
+=================================================*/
+
+.scene{
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    transition:1s;
+
+}
+
+.hidden{
+
+    opacity:0;
+
+    pointer-events:none;
+
+}
+
+
+/*=================================================
+        ANIMACIONES
+=================================================*/
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+        translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+        translateY(0);
 
     }
 
 }
 
-function escribirTexto(){
 
-    if(j < texto.length){
+/*=================================================
+        ESTRELLAS
+=================================================*/
 
-        if(texto[j] == "\n"){
+.star{
 
-            p.innerHTML += "<br>";
+    position:absolute;
 
-        }else{
+    background:white;
 
-            p.innerHTML += texto[j];
+    border-radius:50%;
 
-        }
+    opacity:.75;
 
-        j++;
+    animation:twinkle infinite alternate;
 
-        setTimeout(escribirTexto,35);
+}
 
-    }else{
+@keyframes twinkle{
 
-        btn.style.opacity = "1";
-        btn.style.pointerEvents = "auto";
+    from{
+
+        opacity:.2;
+
+        transform:scale(.8);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1.15);
 
     }
 
 }
 
-escribirTitulo();
 
+/*=================================================
+        PÉTALOS
+=================================================*/
 
-//=============================
-// CAMBIO DE ESCENA
-//=============================
+.petal{
 
-btn.onclick = ()=>{
+    position:absolute;
 
-    gsap.to(scene1,{
-        opacity:0,
-        duration:1
-    });
+    top:-60px;
 
-    setTimeout(()=>{
+    user-select:none;
 
-        scene1.classList.add("hidden");
+    pointer-events:none;
 
-        scene2.classList.remove("hidden");
+    animation:fall linear forwards;
 
-        gsap.fromTo(scene2,
+    opacity:.92;
 
-        {
-            opacity:0,
-            scale:.85
-        },
+}
 
-        {
-            opacity:1,
-            scale:1,
-            duration:1,
-            ease:"power3.out"
-        });
+@keyframes fall{
 
-    },900);
+    0%{
 
-};
+        transform:
 
+        translateY(-80px)
 
-//=============================
-// ANIMACIÓN DEL SOBRE
-//=============================
+        rotate(0deg)
 
-let abierto = false;
+        translateX(0);
 
-envelope.addEventListener("click",()=>{
+    }
 
-    if(abierto) return;
+    25%{
 
-    abierto = true;
+        transform:
 
-    envelope.style.pointerEvents="none";
+        translateY(25vh)
 
-    const tl = gsap.timeline();
+        rotate(120deg)
 
-    // Abre la tapa
+        translateX(18px);
 
-    tl.to(flap,{
+    }
 
-        rotationX:180,
+    50%{
 
-        duration:1,
+        transform:
 
-        ease:"power2.inOut"
+        translateY(50vh)
 
-    });
+        rotate(240deg)
 
-    // La carta asoma
+        translateX(-15px);
 
-    tl.to(letter,{
+    }
 
-        y:-70,
+    75%{
 
-        duration:.8,
+        transform:
 
-        ease:"power2.out"
+        translateY(75vh)
 
-    });
+        rotate(360deg)
 
-    // Pausa
+        translateX(20px);
 
-    tl.to({},{
+    }
 
-        duration:.35
+    100%{
 
-    });
+        transform:
 
-    // Sale completamente
+        translateY(110vh)
 
-    tl.to(letter,{
+        rotate(520deg)
 
-        y:-230,
+        translateX(-18px);
 
-        duration:1.2,
-
-        ease:"power3.out"
-
-    });
-
-    // Rebote
-
-    tl.to(letter,{
-
-        scale:1.02,
-
-        duration:.25,
-
-        yoyo:true,
-
-        repeat:1
-
-    });
-
-    // Agrandar carta
-
-    tl.to(letter,{
-
-        width:"88vw",
-
-        height:"82vh",
-
-        borderRadius:"18px",
-
-        duration:1,
-
-        ease:"power2.inOut"
-
-    });
-
-    // Centrar
-
-    tl.to(letter,{
-
-        x:0,
-
-        y:0,
-
-        duration:.8,
-
-        ease:"power2.inOut"
-
-    });
-
-    // Aquí más adelante escribiremos la carta
-
-    tl.call(()=>{
-
-        console.log("Carta lista.");
-
-    });
-
-});
-
-
-
-//=============================
-// ESTRELLAS
-//=============================
-
-for(let i=0;i<120;i++){
-
-    let star=document.createElement("div");
-
-    star.className="star";
-
-    let size=Math.random()*3+1;
-
-    star.style.width=size+"px";
-
-    star.style.height=size+"px";
-
-    star.style.left=Math.random()*100+"vw";
-
-    star.style.top=Math.random()*100+"vh";
-
-    star.style.animationDuration=Math.random()*2+1+"s";
-
-    document.body.appendChild(star);
+    }
 
 }
 
 
+/*=================================================
+        RESPONSIVE
+=================================================*/
 
-//=============================
-// PÉTALOS
-//=============================
+@media(max-width:768px){
 
-function crearPetalo(){
+    .card{
 
-    let petal=document.createElement("div");
+        padding:35px 25px;
 
-    petal.className="petal";
+    }
 
-    petal.innerHTML="🌸";
+    h1{
 
-    petal.style.left=Math.random()*100+"vw";
+        font-size:42px;
 
-    petal.style.animationDuration=(Math.random()*6+8)+"s";
+    }
 
-    petal.style.fontSize=(Math.random()*18+18)+"px";
+    p{
 
-    document.body.appendChild(petal);
+        font-size:17px;
 
-    setTimeout(()=>{
+        line-height:1.8;
 
-        petal.remove();
+    }
 
-    },14000);
+    button{
+
+        width:100%;
+
+        font-size:17px;
+
+    }
+
+}
+/*=================================================
+                SOBRE
+=================================================*/
+
+.envelope{
+
+    position:relative;
+
+    width:340px;
+
+    height:230px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    animation:floatEnvelope 4s ease-in-out infinite;
+
+    perspective:1200px;
+
+    transform-style:preserve-3d;
 
 }
 
-setInterval(crearPetalo,450);
+
+/*=========================
+        SOMBRA
+=========================*/
+
+.shadow{
+
+    position:absolute;
+
+    bottom:-35px;
+
+    width:240px;
+
+    height:35px;
+
+    background:rgba(0,0,0,.35);
+
+    border-radius:50%;
+
+    filter:blur(18px);
+
+    animation:shadowMove 4s ease-in-out infinite;
+
+    z-index:-1;
+
+}
+
+
+/*=========================
+        CARTA
+=========================*/
+
+.letter{
+
+    position:absolute;
+
+    width:88%;
+
+    height:88%;
+
+    background:#fffdf8;
+
+    border-radius:10px;
+
+    padding:30px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    box-shadow:
+
+        0 15px 35px rgba(0,0,0,.18),
+
+        inset 0 0 30px rgba(255,240,220,.35);
+
+    z-index:4;
+
+    transform:translateY(95px);
+
+    transition:1s;
+
+    overflow:hidden;
+
+}
+
+
+/* Papel */
+
+.letter::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    repeating-linear-gradient(
+
+        180deg,
+
+        rgba(0,0,0,.02),
+
+        rgba(0,0,0,.02) 2px,
+
+        transparent 2px,
+
+        transparent 8px
+
+    );
+
+    pointer-events:none;
+
+}
+
+
+/*=========================
+        PARTE TRASERA
+=========================*/
+
+.back{
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+
+        145deg,
+
+        #f9e9d5,
+
+        #efd2b1
+
+    );
+
+    border-radius:12px;
+
+    box-shadow:
+
+        inset 0 0 12px rgba(255,255,255,.45),
+
+        0 12px 30px rgba(0,0,0,.25);
+
+}
+
+
+/*=========================
+        PARTE DELANTERA
+=========================*/
+
+.front{
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+
+        145deg,
+
+        #f1d7b9,
+
+        #e8c6a2
+
+    );
+
+    clip-path:polygon(
+
+        0 0,
+
+        50% 58%,
+
+        100% 0,
+
+        100% 100%,
+
+        0 100%
+
+    );
+
+    border-radius:12px;
+
+    z-index:8;
+
+}
+
+
+/*=========================
+        TAPA
+=========================*/
+
+.flap{
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+
+        145deg,
+
+        #f4dcc0,
+
+        #e7c39d
+
+    );
+
+    clip-path:polygon(
+
+        0 0,
+
+        50% 60%,
+
+        100% 0
+
+    );
+
+    transform-origin:top;
+
+    transform-style:preserve-3d;
+
+    z-index:10;
+
+}
+
+
+/*=========================
+        BRILLO
+=========================*/
+
+.envelope::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:-60%;
+
+    left:-70%;
+
+    width:45%;
+
+    height:220%;
+
+    background:
+
+    linear-gradient(
+
+        90deg,
+
+        transparent,
+
+        rgba(255,255,255,.55),
+
+        transparent
+
+    );
+
+    transform:rotate(25deg);
+
+    animation:shine 6s infinite;
+
+    pointer-events:none;
+
+}
+
+
+/*=========================
+        TEXTO
+=========================*/
+
+.letter h2{
+
+    font-family:'Cormorant Garamond',serif;
+
+    font-size:36px;
+
+    color:#cf7097;
+
+    margin-bottom:18px;
+
+    z-index:2;
+
+}
+
+.letter p{
+
+    color:#5a5a5a;
+
+    font-size:18px;
+
+    text-align:center;
+
+    line-height:1.8;
+
+    z-index:2;
+
+}
+
+
+/*=========================
+        CARTA GRANDE
+=========================*/
+
+#letterText{
+
+    margin-top:25px;
+
+    color:#555;
+
+    line-height:1.9;
+
+    font-size:18px;
+
+    white-space:pre-line;
+
+    text-align:left;
+
+    min-height:180px;
+
+}
+
+#continueBtn{
+
+    margin-top:35px;
+
+    opacity:0;
+
+    pointer-events:none;
+
+}
+
+
+/*=========================
+        FULLSCREEN
+=========================*/
+
+.fullscreen{
+
+    position:fixed !important;
+
+    top:50%;
+
+    left:50%;
+
+    transform:translate(-50%,-50%) !important;
+
+    width:min(92vw,720px) !important;
+
+    height:85vh !important;
+
+    border-radius:22px;
+
+    background:#fffefb;
+
+    z-index:999;
+
+    padding:45px;
+
+    overflow:auto;
+
+    box-shadow:
+
+        0 40px 80px rgba(0,0,0,.45);
+
+}
+
+
+/*=========================
+        DESENFOQUE
+=========================*/
+
+.blur{
+
+    filter:blur(8px);
+
+    opacity:.4;
+
+    transition:1s;
+
+}
+
+
+/*=========================
+        ANIMACIONES
+=========================*/
+
+@keyframes floatEnvelope{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-12px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+@keyframes shadowMove{
+
+    0%{
+
+        transform:scale(1);
+
+        opacity:.35;
+
+    }
+
+    50%{
+
+        transform:scale(.9);
+
+        opacity:.22;
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:.35;
+
+    }
+
+}
+
+
+@keyframes shine{
+
+    0%{
+
+        left:-70%;
+
+    }
+
+    100%{
+
+        left:140%;
+
+    }
+
+}
+
+
+/*=================================================
+        RESPONSIVE SOBRE
+=================================================*/
+
+@media(max-width:768px){
+
+    .envelope{
+
+        width:300px;
+
+        height:205px;
+
+    }
+
+    .letter{
+
+        padding:22px;
+
+    }
+
+    .letter h2{
+
+        font-size:30px;
+
+    }
+
+    .letter p{
+
+        font-size:16px;
+
+    }
+
+}
+/*=================================================
+        LUZ DE LUNA
+=================================================*/
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:420px;
+
+    height:420px;
+
+    border-radius:50%;
+
+    top:-140px;
+
+    right:-80px;
+
+    background:radial-gradient(circle,
+    rgba(255,255,255,.18),
+    rgba(255,255,255,.04),
+    transparent 70%);
+
+    filter:blur(8px);
+
+    z-index:-8;
+
+}
+
+
+/*=================================================
+        AURORA SUAVE
+=================================================*/
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+
+    radial-gradient(circle at bottom,
+
+    rgba(255,180,220,.05),
+
+    transparent 55%);
+
+    animation:aurora 12s ease-in-out infinite alternate;
+
+    z-index:-9;
+
+}
+
+
+@keyframes aurora{
+
+    from{
+
+        transform:translateX(-30px);
+
+    }
+
+    to{
+
+        transform:translateX(40px);
+
+    }
+
+}
+
+
+/*=================================================
+        RESPLANDOR DEL SOBRE
+=================================================*/
+
+.envelope::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:520px;
+
+    height:520px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(circle,
+
+    rgba(255,240,220,.18),
+
+    transparent 72%);
+
+    filter:blur(40px);
+
+    z-index:-2;
+
+}
+
+
+/*=================================================
+        EFECTO CRISTAL
+=================================================*/
+
+.card{
+
+    background:
+
+    linear-gradient(
+
+    145deg,
+
+    rgba(255,255,255,.11),
+
+    rgba(255,255,255,.05));
+
+}
+
+
+/*=================================================
+        SOMBRAS
+=================================================*/
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+    transition:.5s;
+
+}
+
+
+/*=================================================
+        BOTÓN
+=================================================*/
+
+button{
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #ffd7e8,
+
+    #ffc1da);
+
+}
+
+
+button:hover{
+
+    transform:
+
+    translateY(-5px)
+
+    scale(1.03);
+
+}
+
+
+/*=================================================
+        CARTA
+=================================================*/
+
+.letter{
+
+    background:
+
+    linear-gradient(
+
+    white,
+
+    #fffdf8);
+
+}
+
+
+/* Papel */
+
+.letter::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background-image:
+
+    radial-gradient(
+
+    rgba(0,0,0,.025) 1px,
+
+    transparent 1px);
+
+    background-size:14px 14px;
+
+    opacity:.35;
+
+    pointer-events:none;
+
+}
+
+
+/*=================================================
+        SELLO
+=================================================*/
+
+.letter .seal{
+
+    position:absolute;
+
+    bottom:22px;
+
+    right:25px;
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(circle,
+
+    #ff8db8,
+
+    #d94c87);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:26px;
+
+    box-shadow:
+
+    0 8px 20px rgba(0,0,0,.25);
+
+    animation:pulseSeal 3s infinite;
+
+}
+
+
+@keyframes pulseSeal{
+
+    0%{
+
+        transform:scale(1);
+
+    }
+
+    50%{
+
+        transform:scale(1.05);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+    }
+
+}
+
+
+/*=================================================
+        SCROLL
+=================================================*/
+
+.fullscreen::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.fullscreen::-webkit-scrollbar-thumb{
+
+    background:#f3bfd4;
+
+    border-radius:20px;
+
+}
+
+
+/*=================================================
+        ANIMACIÓN CARTA
+=================================================*/
+
+@keyframes paperAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+        translateY(50px)
+
+        scale(.95);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+        translateY(0)
+
+        scale(1);
+
+    }
+
+}
+
+
+/*=================================================
+        TITULO CARTA
+=================================================*/
+
+#letterTitle{
+
+    color:#cf7097;
+
+    font-size:42px;
+
+    margin-bottom:20px;
+
+    text-align:center;
+
+}
+
+
+/*=================================================
+        TEXTO CARTA
+=================================================*/
+
+#letterText{
+
+    font-size:19px;
+
+    line-height:2;
+
+    color:#555;
+
+}
+
+
+/*=================================================
+        CONTINUAR
+=================================================*/
+
+#continueBtn{
+
+    align-self:center;
+
+}
+
+
+/*=================================================
+        EFECTO FOCUS
+=================================================*/
+
+.focus{
+
+    filter:blur(6px);
+
+    opacity:.25;
+
+}
+
+
+/*=================================================
+        RESPONSIVE
+=================================================*/
+
+@media(max-width:600px){
+
+body::before{
+
+display:none;
+
+}
+
+.envelope{
+
+width:270px;
+
+height:190px;
+
+}
+
+.fullscreen{
+
+width:94vw !important;
+
+height:88vh !important;
+
+padding:30px;
+
+}
+
+#letterTitle{
+
+font-size:34px;
+
+}
+
+#letterText{
+
+font-size:17px;
+
+line-height:1.8;
+
+}
+
+}
