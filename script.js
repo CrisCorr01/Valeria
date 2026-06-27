@@ -1,143 +1,219 @@
-//=============================
-// MENSAJE DE BIENVENIDA
-//=============================
+/*==================================================
+                PROYECTO
+            LAS TRES CARTAS
+==================================================*/
 
-const titulo = "Hola, Vale 🌸";
+/*==================================================
+                TEXTOS
+==================================================*/
 
-const texto =
-`Gracias por abrir las tres cartas.
+const bienvenida = {
 
-Todavía queda un pequeño secreto.
+    titulo: "Hola, Vale 🌸",
 
-Y quiero descubrirlo contigo.`;
+    mensaje:
+`Si llegaste hasta aquí...
 
+significa que abriste las tres cartas.
 
-let i = 0;
-let j = 0;
+Gracias por dedicarme un pedacito de tu tiempo.
 
-const h1 = document.getElementById("titulo");
-const p = document.getElementById("texto");
-const btn = document.getElementById("btn");
-
-const scene1 = document.getElementById("scene1");
-const scene2 = document.getElementById("scene2");
-
-const envelope = document.querySelector(".envelope");
-const flap = document.querySelector(".flap");
-const letter = document.querySelector(".letter");
-
-
-//=============================
-// EFECTO MAQUINA DE ESCRIBIR
-//=============================
-
-function escribirTitulo(){
-
-    if(i < titulo.length){
-
-        h1.innerHTML += titulo.charAt(i);
-
-        i++;
-
-        setTimeout(escribirTitulo,90);
-
-    }else{
-
-        setTimeout(escribirTexto,500);
-
-    }
-
-}
-
-function escribirTexto(){
-
-    if(j < texto.length){
-
-        if(texto[j] == "\n"){
-
-            p.innerHTML += "<br>";
-
-        }else{
-
-            p.innerHTML += texto[j];
-
-        }
-
-        j++;
-
-        setTimeout(escribirTexto,35);
-
-    }else{
-
-        btn.style.opacity = "1";
-        btn.style.pointerEvents = "auto";
-
-    }
-
-}
-
-escribirTitulo();
-
-
-//=============================
-// CAMBIO DE ESCENA
-//=============================
-
-btn.onclick = ()=>{
-
-    gsap.to(scene1,{
-        opacity:0,
-        duration:1
-    });
-
-    setTimeout(()=>{
-
-        scene1.classList.add("hidden");
-
-        scene2.classList.remove("hidden");
-
-        gsap.fromTo(scene2,
-
-        {
-            opacity:0,
-            scale:.85
-        },
-
-        {
-            opacity:1,
-            scale:1,
-            duration:1,
-            ease:"power3.out"
-        });
-
-    },900);
+Quise que este puente tuviera un pequeño detalle esperándote.`
 
 };
 
 
-//=============================
-// ANIMACIÓN DEL SOBRE
-//=============================
+/*==================================================
+                REFERENCIAS
+==================================================*/
 
-let abierto = false;
+// Escenas
 
-envelope.addEventListener("click",()=>{
+const scene1 = document.getElementById("scene1");
+const scene2 = document.getElementById("scene2");
+const scene3 = document.getElementById("scene3");
+const scene4 = document.getElementById("scene4");
+const scene5 = document.getElementById("scene5");
 
-    if(abierto) return;
 
-    abierto = true;
+// Bienvenida
+
+const titulo = document.getElementById("titulo");
+const texto = document.getElementById("texto");
+const btn = document.getElementById("btn");
+
+
+// Sobre
+
+const envelope = document.querySelector(".envelope");
+const flap = document.querySelector(".flap");
+const front = document.querySelector(".front");
+const back = document.querySelector(".back");
+const shadow = document.querySelector(".shadow");
+const miniLetter = document.querySelector(".letter-mini");
+
+
+// Carta
+
+const letterTitle = document.getElementById("letterTitle");
+const letterText = document.getElementById("letterText");
+const continueBtn = document.getElementById("continueBtn");
+
+
+// Pista
+
+const hintTitle = document.getElementById("hintTitle");
+const hintText = document.getElementById("hintText");
+const gameBtn = document.getElementById("gameBtn");
+
+
+// Final
+
+const finalTitle = document.getElementById("finalTitle");
+const finalMessage = document.getElementById("finalMessage");
+
+
+/*==================================================
+                VARIABLES
+==================================================*/
+
+let indiceTitulo = 0;
+let indiceTexto = 0;
+
+let sobreAbierto = false;
+
+/*==================================================
+                FASE 1
+            BIENVENIDA
+==================================================*/
+
+window.addEventListener("load",()=>{
+
+    escribirTitulo();
+
+});
+
+
+/*==================================================
+            ESCRIBIR TÍTULO
+==================================================*/
+
+function escribirTitulo(){
+
+    if(indiceTitulo < bienvenida.titulo.length){
+
+        titulo.innerHTML += bienvenida.titulo.charAt(indiceTitulo);
+
+        indiceTitulo++;
+
+        setTimeout(escribirTitulo,90);
+
+    }
+
+    else{
+
+        setTimeout(escribirMensaje,600);
+
+    }
+
+}
+
+
+/*==================================================
+            ESCRIBIR MENSAJE
+==================================================*/
+
+function escribirMensaje(){
+
+    if(indiceTexto < bienvenida.mensaje.length){
+
+        const letra = bienvenida.mensaje.charAt(indiceTexto);
+
+        if(letra === "\n"){
+
+            texto.innerHTML += "<br>";
+
+        }
+
+        else{
+
+            texto.innerHTML += letra;
+
+        }
+
+        indiceTexto++;
+
+        setTimeout(escribirMensaje,35);
+
+    }
+
+    else{
+
+        mostrarBoton();
+
+    }
+
+}
+
+
+/*==================================================
+            MOSTRAR BOTÓN
+==================================================*/
+
+function mostrarBoton(){
+
+    gsap.to(btn,{
+
+        opacity:1,
+
+        duration:.8,
+
+        ease:"power2.out",
+
+        onComplete:()=>{
+
+            btn.style.pointerEvents="auto";
+
+        }
+
+    });
+
+}
+
+
+/*==================================================
+            IR AL SOBRE
+==================================================*/
+
+btn.addEventListener("click",()=>{
+
+    cambiarEscena(scene1,scene2);
+
+});
+/*==================================================
+                FASE 2
+                EL SOBRE
+==================================================*/
+
+envelope.addEventListener("click",abrirSobre);
+
+function abrirSobre(){
+
+    if(sobreAbierto) return;
+
+    sobreAbierto = true;
 
     envelope.style.pointerEvents="none";
 
     const tl = gsap.timeline();
 
-    // Abre la tapa
+    // Abrir la tapa
 
     tl.to(flap,{
 
         rotationX:180,
 
-        duration:1,
+        duration:.9,
 
         ease:"power2.inOut"
 
@@ -145,17 +221,17 @@ envelope.addEventListener("click",()=>{
 
     // La carta asoma
 
-    tl.to(letter,{
+    tl.to(miniLetter,{
 
-        y:-70,
+        y:-55,
 
         duration:.8,
 
         ease:"power2.out"
 
-    });
+    },"-=0.15");
 
-    // Pausa
+    // Espera un momento
 
     tl.to({},{
 
@@ -165,23 +241,23 @@ envelope.addEventListener("click",()=>{
 
     // Sale completamente
 
-    tl.to(letter,{
+    tl.to(miniLetter,{
 
         y:-230,
 
-        duration:1.2,
+        duration:1,
 
         ease:"power3.out"
 
     });
 
-    // Rebote
+    // Pequeño rebote
 
-    tl.to(letter,{
+    tl.to(miniLetter,{
 
         scale:1.02,
 
-        duration:.25,
+        duration:.20,
 
         yoyo:true,
 
@@ -189,102 +265,663 @@ envelope.addEventListener("click",()=>{
 
     });
 
-    // Agrandar carta
+    // El sobre desaparece
 
-    tl.to(letter,{
+    tl.to(
 
-        width:"88vw",
+        [front,back,flap,shadow],
 
-        height:"82vh",
+        {
 
-        borderRadius:"18px",
+            opacity:0,
 
-        duration:1,
+            duration:.6,
 
-        ease:"power2.inOut"
+            ease:"power2.out"
 
-    });
+        }
 
-    // Centrar
+    );
 
-    tl.to(letter,{
+    // Espera
 
-        x:0,
+    tl.to({},{
 
-        y:0,
-
-        duration:.8,
-
-        ease:"power2.inOut"
+        duration:.4
 
     });
 
-    // Aquí más adelante escribiremos la carta
+    // Cambia de escena
 
     tl.call(()=>{
 
-        console.log("Carta lista.");
+        cambiarEscena(scene2,scene3);
+
+        iniciarCarta();
 
     });
 
+}
+/*==================================================
+                FASE 3
+                CARTA
+==================================================*/
+
+const carta = {
+
+titulo:"Para ti ❤️",
+
+texto:
+
+`No quería que este puente fuera solamente
+un par de días sin vernos.
+
+Quise dejarte algo que pudiera hacerte sonreír
+aunque fuera por un momento.
+
+Si estás leyendo esto...
+
+significa que aceptaste seguir este pequeño juego.
+
+Y todavía queda una última cosa por descubrir...`
+
+};
+
+let indiceCartaTitulo=0;
+
+let indiceCartaTexto=0;
+
+
+/*==================================================
+            INICIAR CARTA
+==================================================*/
+
+function iniciarCarta(){
+
+    letterTitle.innerHTML="";
+
+    letterText.innerHTML="";
+
+    continueBtn.style.opacity=0;
+
+    continueBtn.style.pointerEvents="none";
+
+    indiceCartaTitulo=0;
+
+    indiceCartaTexto=0;
+
+    escribirTituloCarta();
+
+}
+
+
+/*==================================================
+            TÍTULO
+==================================================*/
+
+function escribirTituloCarta(){
+
+    if(indiceCartaTitulo<carta.titulo.length){
+
+        letterTitle.innerHTML+=carta.titulo.charAt(indiceCartaTitulo);
+
+        indiceCartaTitulo++;
+
+        setTimeout(escribirTituloCarta,80);
+
+    }
+
+    else{
+
+        setTimeout(escribirTextoCarta,500);
+
+    }
+
+}
+
+
+/*==================================================
+            TEXTO
+==================================================*/
+
+function escribirTextoCarta(){
+
+    if(indiceCartaTexto<carta.texto.length){
+
+        const letra=carta.texto.charAt(indiceCartaTexto);
+
+        if(letra=="\n"){
+
+            letterText.innerHTML+="<br>";
+
+        }
+
+        else{
+
+            letterText.innerHTML+=letra;
+
+        }
+
+        indiceCartaTexto++;
+
+        setTimeout(escribirTextoCarta,28);
+
+    }
+
+    else{
+
+        gsap.to(continueBtn,{
+
+            opacity:1,
+
+            duration:.8,
+
+            onComplete:()=>{
+
+                continueBtn.style.pointerEvents="auto";
+
+            }
+
+        });
+
+    }
+
+}
+
+
+/*==================================================
+        CONTINUAR
+==================================================*/
+
+continueBtn.addEventListener("click",()=>{
+
+    cambiarEscena(scene3,scene4);
+
+    iniciarPista();
+
 });
+/*==================================================
+                FASE 4
+                LA PISTA
+==================================================*/
+
+const pista = {
+
+    titulo:"Todavía falta una última cosa... 🌸",
+
+    texto:
+`Las tres cartas tenían un pequeño detalle escondido.
+
+No estaba al principio.
+
+No estaba al final.
+
+Estuvo frente a tus ojos todo este tiempo.
+
+Vuelve a leerlas...
+
+pero esta vez observa únicamente las letras MAYÚSCULAS.
+
+Ellas tienen algo que decirte ❤️`
+
+};
+
+let indicePistaTitulo = 0;
+let indicePistaTexto = 0;
 
 
+/*==================================================
+            INICIAR PISTA
+==================================================*/
 
-//=============================
-// ESTRELLAS
-//=============================
+function iniciarPista(){
 
-for(let i=0;i<120;i++){
+    hintTitle.innerHTML = "";
+    hintText.innerHTML = "";
 
-    let star=document.createElement("div");
+    gameBtn.style.opacity = 0;
+    gameBtn.style.pointerEvents = "none";
 
-    star.className="star";
+    indicePistaTitulo = 0;
+    indicePistaTexto = 0;
 
-    let size=Math.random()*3+1;
+    escribirTituloPista();
 
-    star.style.width=size+"px";
+}
 
-    star.style.height=size+"px";
 
-    star.style.left=Math.random()*100+"vw";
+/*==================================================
+            TÍTULO
+==================================================*/
 
-    star.style.top=Math.random()*100+"vh";
+function escribirTituloPista(){
 
-    star.style.animationDuration=Math.random()*2+1+"s";
+    if(indicePistaTitulo < pista.titulo.length){
 
-    document.body.appendChild(star);
+        hintTitle.innerHTML += pista.titulo.charAt(indicePistaTitulo);
+
+        indicePistaTitulo++;
+
+        setTimeout(escribirTituloPista,70);
+
+    }
+
+    else{
+
+        setTimeout(escribirTextoPista,500);
+
+    }
 
 }
 
 
+/*==================================================
+            TEXTO
+==================================================*/
 
-//=============================
-// PÉTALOS
-//=============================
+function escribirTextoPista(){
 
-function crearPetalo(){
+    if(indicePistaTexto < pista.texto.length){
 
-    let petal=document.createElement("div");
+        const letra = pista.texto.charAt(indicePistaTexto);
 
-    petal.className="petal";
+        if(letra == "\n"){
 
-    petal.innerHTML="🌸";
+            hintText.innerHTML += "<br>";
 
-    petal.style.left=Math.random()*100+"vw";
+        }
 
-    petal.style.animationDuration=(Math.random()*6+8)+"s";
+        else{
 
-    petal.style.fontSize=(Math.random()*18+18)+"px";
+            hintText.innerHTML += letra;
 
-    document.body.appendChild(petal);
+        }
 
-    setTimeout(()=>{
+        indicePistaTexto++;
 
-        petal.remove();
+        setTimeout(escribirTextoPista,28);
 
-    },14000);
+    }
+
+    else{
+
+        gsap.to(gameBtn,{
+
+            opacity:1,
+
+            duration:.8,
+
+            onComplete:()=>{
+
+                gameBtn.style.pointerEvents="auto";
+
+            }
+
+        });
+
+    }
 
 }
 
-setInterval(crearPetalo,450);
+
+/*==================================================
+            CONTINUAR
+==================================================*/
+
+gameBtn.addEventListener("click",()=>{
+
+    cambiarEscena(scene4,scene5);
+
+    iniciarFinal();
+
+});
+/*==================================================
+                FASE 5
+                FINAL
+==================================================*/
+
+const final = {
+
+titulo:"Ahora ya lo sabes... ❤️",
+
+mensaje:
+
+`Si llegaste hasta aquí...
+
+es porque descubriste el pequeño secreto escondido entre las tres cartas.
+
+La verdad es que nunca fue solamente un juego.
+
+Fue una forma distinta de acompañarte durante estos días en los que no podíamos vernos.
+
+Y si después de todo este recorrido logré sacarte aunque fuera una sonrisa...
+
+entonces todo valió la pena.
+
+Gracias por abrir las cartas.
+
+Gracias por llegar hasta aquí.
+
+Y, sobre todo...
+
+gracias por ser tú.
+
+🌸❤️`
+
+};
+
+let indiceFinalTitulo = 0;
+let indiceFinalTexto = 0;
+
+
+/*==================================================
+            INICIAR FINAL
+==================================================*/
+
+function iniciarFinal(){
+
+    finalTitle.innerHTML = "";
+    finalMessage.innerHTML = "";
+
+    indiceFinalTitulo = 0;
+    indiceFinalTexto = 0;
+
+    escribirTituloFinal();
+
+}
+
+
+/*==================================================
+            TÍTULO
+==================================================*/
+
+function escribirTituloFinal(){
+
+    if(indiceFinalTitulo < final.titulo.length){
+
+        finalTitle.innerHTML += final.titulo.charAt(indiceFinalTitulo);
+
+        indiceFinalTitulo++;
+
+        setTimeout(escribirTituloFinal,70);
+
+    }
+
+    else{
+
+        setTimeout(escribirTextoFinal,500);
+
+    }
+
+}
+
+
+/*==================================================
+            TEXTO
+==================================================*/
+
+function escribirTextoFinal(){
+
+    if(indiceFinalTexto < final.mensaje.length){
+
+        const letra = final.mensaje.charAt(indiceFinalTexto);
+
+        if(letra == "\n"){
+
+            finalMessage.innerHTML += "<br>";
+
+        }
+
+        else{
+
+            finalMessage.innerHTML += letra;
+
+        }
+
+        indiceFinalTexto++;
+
+        setTimeout(escribirTextoFinal,28);
+
+    }
+
+}
+/*==================================================
+                FASE 5
+                FINAL
+==================================================*/
+
+const final = {
+
+titulo:"Ahora ya lo sabes... ❤️",
+
+mensaje:
+
+`Si llegaste hasta aquí...
+
+es porque descubriste el pequeño secreto escondido entre las tres cartas.
+
+La verdad es que nunca fue solamente un juego.
+
+Fue una forma distinta de acompañarte durante estos días en los que no podíamos vernos.
+
+Y si después de todo este recorrido logré sacarte aunque fuera una sonrisa...
+
+entonces todo valió la pena.
+
+Gracias por abrir las cartas.
+
+Gracias por llegar hasta aquí.
+
+Y, sobre todo...
+
+gracias por ser tú.
+
+🌸❤️`
+
+};
+
+let indiceFinalTitulo = 0;
+let indiceFinalTexto = 0;
+
+
+/*==================================================
+            INICIAR FINAL
+==================================================*/
+
+function iniciarFinal(){
+
+    finalTitle.innerHTML = "";
+    finalMessage.innerHTML = "";
+
+    indiceFinalTitulo = 0;
+    indiceFinalTexto = 0;
+
+    escribirTituloFinal();
+
+}
+
+
+/*==================================================
+            TÍTULO
+==================================================*/
+
+function escribirTituloFinal(){
+
+    if(indiceFinalTitulo < final.titulo.length){
+
+        finalTitle.innerHTML += final.titulo.charAt(indiceFinalTitulo);
+
+        indiceFinalTitulo++;
+
+        setTimeout(escribirTituloFinal,70);
+
+    }
+
+    else{
+
+        setTimeout(escribirTextoFinal,500);
+
+    }
+
+}
+
+
+/*==================================================
+            TEXTO
+==================================================*/
+
+function escribirTextoFinal(){
+
+    if(indiceFinalTexto < final.mensaje.length){
+
+        const letra = final.mensaje.charAt(indiceFinalTexto);
+
+        if(letra == "\n"){
+
+            finalMessage.innerHTML += "<br>";
+
+        }
+
+        else{
+
+            finalMessage.innerHTML += letra;
+
+        }
+
+        indiceFinalTexto++;
+
+        setTimeout(escribirTextoFinal,28);
+
+    }
+
+}
+/*==================================================
+            CAMBIO DE ESCENA
+==================================================*/
+
+function cambiarEscena(actual,siguiente){
+
+    gsap.to(actual,{
+
+        opacity:0,
+
+        duration:.8,
+
+        ease:"power2.out",
+
+        onComplete:()=>{
+
+            actual.classList.remove("active");
+            actual.classList.add("hidden");
+
+            siguiente.classList.remove("hidden");
+            siguiente.classList.add("active");
+
+            gsap.fromTo(
+
+                siguiente,
+
+                {
+
+                    opacity:0
+
+                },
+
+                {
+
+                    opacity:1,
+
+                    duration:.8,
+
+                    ease:"power2.out"
+
+                }
+
+            );
+
+        }
+
+    });
+
+}
+
+
+/*==================================================
+                EFECTO ESCRIBIR
+==================================================*/
+
+function escribirTexto(elemento,texto,velocidad,callback){
+
+    let i=0;
+
+    elemento.innerHTML="";
+
+    function escribir(){
+
+        if(i<texto.length){
+
+            if(texto[i]=="\n"){
+
+                elemento.innerHTML+="<br>";
+
+            }
+
+            else{
+
+                elemento.innerHTML+=texto[i];
+
+            }
+
+            i++;
+
+            setTimeout(escribir,velocidad);
+
+        }
+
+        else{
+
+            if(callback){
+
+                callback();
+
+            }
+
+        }
+
+    }
+
+    escribir();
+
+}
+
+
+/*==================================================
+                REINICIAR
+==================================================*/
+
+function reiniciarIndices(){
+
+    indiceTitulo=0;
+    indiceTexto=0;
+
+    indiceCartaTitulo=0;
+    indiceCartaTexto=0;
+
+    indicePistaTitulo=0;
+    indicePistaTexto=0;
+
+    indiceFinalTitulo=0;
+    indiceFinalTexto=0;
+
+}
+
+
+/*==================================================
+            MENSAJE FINAL
+==================================================*/
+
+setTimeout(()=>{
+
+    console.log("Proyecto iniciado correctamente ❤️");
+
+},500);
