@@ -24,6 +24,10 @@ const scene2 = document.getElementById("scene2");
 
 const envelope = document.querySelector(".envelope");
 const flap = document.querySelector(".flap");
+const front=document.querySelector(".front");
+const back=document.querySelector(".back");
+const shadow=document.querySelector(".shadow");
+const background=document.getElementById("background");
 const letter = document.querySelector(".letter");
 
 
